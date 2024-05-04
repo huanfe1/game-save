@@ -1,5 +1,5 @@
 {
-    "name": "game-save-manager",
+    "name": "game-save-backup",
     "version": "0.0.1",
     "main": "dist-electron/main/index.js",
     "description": "游戏存档管理器",
@@ -35,19 +35,9 @@
         "vite-plugin-electron-renderer": "^0.14.5",
         "zustand": "^4.5.2"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/huanfe1/game-save-manager.git"
-    },
-    "keywords": [
-        "game"
-    ],
-    "bugs": {
-        "url": "https://github.com/huanfe1/game-save-manager/issues"
-    },
-    "homepage": "https://github.com/huanfe1/game-save-manager#readme",
     "dependencies": {
         "@nextui-org/react": "^2.3.6",
+        "compressing": "^1.10.0",
         "electron-store": "^8.2.0",
         "framer-motion": "^11.1.7"
     }

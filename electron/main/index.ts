@@ -134,4 +134,8 @@ ipcMain.on('window-min', function () {
     win && win.minimize();
 });
 
+ipcMain.on('window-reload', function () {
+    win && win.reload();
+});
+
 games();

@@ -1,4 +1,4 @@
-import { useGlobalStore } from '@/store';
+import { useStoreGames } from '@/store';
 import { Button, Input } from '@nextui-org/react';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ export default function AddGame() {
     const [state, setState] = useState(false);
     const [name, setName] = useState<string>('');
     const [path, setPath] = useState<string>('');
-    const addGame = useGlobalStore(state => state.addGame);
+    const addGame = useStoreGames(state => state.addGame);
     const select = () => {
         window.ipcRenderer.invoke('choose-folder').then(res => setPath(res));
     };

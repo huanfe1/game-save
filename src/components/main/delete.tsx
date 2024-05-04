@@ -1,10 +1,10 @@
-import { useGlobalStore } from '@/store';
+import { useStoreGames } from '@/store';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 
 export default function Delete() {
-    const { mainName, setMainName, removeGame } = useGlobalStore(store => store);
+    const { mainName, setMainName, removeGame } = useStoreGames(store => store);
     const remove = () => {
         removeGame(mainName);
         setMainName('');
@@ -12,7 +12,7 @@ export default function Delete() {
     const [deleteState, setDeleteState] = useState(false);
     return (
         <>
-            <Button isIconOnly title="删除游戏" className="absolute right-5 top-5" onPress={() => setDeleteState(true)}>
+            <Button isIconOnly title="删除游戏" onPress={() => setDeleteState(true)}>
                 <DeleteSvg />
             </Button>
             <Modal isOpen={deleteState} backdrop="blur" onClose={() => setDeleteState(false)}>

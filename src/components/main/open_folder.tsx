@@ -1,14 +1,14 @@
-import { useGlobalStore } from '@/store';
+import { useStoreGames } from '@/store';
 import { Button, Tooltip } from '@nextui-org/react';
 
 export default function OpenFolder() {
-    const { games, mainName } = useGlobalStore(store => store);
+    const { games, mainName } = useStoreGames(store => store);
     const click = () => {
         console.log(games[mainName].path);
         window.ipcRenderer.send('open-folder', games[mainName].path);
     };
     return (
-        <Button isIconOnly title="打开文件夹" onPress={click} className="absolute right-16 top-5">
+        <Button isIconOnly title="打开文件夹" onPress={click}>
             <OpenFolderSvg />
         </Button>
     );

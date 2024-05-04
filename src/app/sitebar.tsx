@@ -1,11 +1,11 @@
-import { useGlobalStore } from '@/store';
+import { useStoreGames } from '@/store';
 import { Button } from '@nextui-org/react';
 import { useEffect } from 'react';
 
 import AddGame from '@/components/modal/add_game';
 
 export default function Sidebar() {
-    const { games, setGames, setMainName } = useGlobalStore(state => state);
+    const { games, setGames, setMainName } = useStoreGames(state => state);
     useEffect(() => {
         window.ipcRenderer.invoke('get-games').then(res => setGames(res));
     }, []);

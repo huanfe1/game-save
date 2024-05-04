@@ -1,38 +1,31 @@
-import { useGlobalStore } from '@/store';
+import { useStoreBackups, useStoreGames } from '@/store';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import { Button } from '@nextui-org/react';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
 
 export default function List() {
-    const mainName = useGlobalStore(store => store.mainName);
-    window.ipcRenderer.invoke('get-game-backup', mainName).then(res => console.log(res));
+    const mainName = useStoreGames(store => store.mainName);
+    const { backups, setBackups } = useStoreBackups(store => store);
+    useEffect(() => {
+        window.ipcRenderer.invoke('get-game-backup', mainName).then(res => setBackups(res));
+    }, [mainName]);
     return (
-        <Table aria-label="快照存档列表" isStriped className="mt-10" shadow="none">
+        <Table isStriped shadow="none">
             <TableHeader>
                 <TableColumn>时间</TableColumn>
                 <TableColumn>备注</TableColumn>
-                <TableColumn>操作</TableColumn>
+                <TableColumn>存档全称</TableColumn>
             </TableHeader>
             <TableBody emptyContent="暂时还没有存档">
-                <TableRow key="1">
-                    <TableCell>Tony Reichert</TableCell>
-                    <TableCell>CEO</TableCell>
-                    <TableCell>Paused</TableCell>
-                </TableRow>
-                <TableRow key="2">
-                    <TableCell>Zoey Lang</TableCell>
-                    <TableCell>Technical Lead</TableCell>
-                    <TableCell>Paused</TableCell>
-                </TableRow>
-                <TableRow key="3">
-                    <TableCell>Jane Fisher</TableCell>
-                    <TableCell>Senior Developer</TableCell>
-                    <TableCell>Active</TableCell>
-                </TableRow>
-                <TableRow key="4">
-                    <TableCell>William Howard</TableCell>
-                    <TableCell>Community Manager</TableCell>
-                    <TableCell>Vacation</TableCell>
-                </TableRow>
+                {backups.map(name => (
+                    <TableRow key={name}>
+                        <TableCell>
+                            {dayjs(parseInt(name.replace('.zip', '').split('--')[0])).format('YYYY-MM-DD HH:mm:ss')}
+                        </TableCell>
+                        <TableCell>{name.replace('.zip', '').split('--')[1]}</TableCell>
+                        <TableCell>{name}</TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
     );

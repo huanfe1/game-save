@@ -1,6 +1,7 @@
+import dayjs from 'dayjs';
 import { create } from 'zustand';
 
-type GlobalStore = {
+type GamesType = {
     mainName: string;
     games: Record<string, { path: string }>;
     setMainName: (name: string) => void;
@@ -9,7 +10,7 @@ type GlobalStore = {
     removeGame: (name: string) => void;
 };
 
-export const useGlobalStore = create<GlobalStore>(set => ({
+export const useStoreGames = create<GamesType>(set => ({
     mainName: '',
     games: {},
     setMainName: (name: string) => {
@@ -31,6 +32,28 @@ export const useGlobalStore = create<GlobalStore>(set => ({
         window.ipcRenderer.invoke('remove-game', name);
         set(state => ({
             games: Object.fromEntries(Object.entries(state.games).filter(([key]) => key !== name)),
+        }));
+    },
+}));
+
+type BackupsType = {
+    backups: string[];
+    setBackups: (backups: string[]) => void;
+    addBackup: (name: string) => void;
+    removeBackup: (name: string) => void;
+};
+
+export const useStoreBackups = create<BackupsType>(set => ({
+    backups: [],
+    setBackups: (backups: string[]) => {
+        set({ backups });
+    },
+    addBackup: (name: string) => {
+        set(state => ({ backups: [name, ...state.backups] }));
+    },
+    removeBackup: (name: string) => {
+        set(state => ({
+            backups: state.backups.filter(i => i !== name),
         }));
     },
 }));
