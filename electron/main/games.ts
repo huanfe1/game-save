@@ -62,11 +62,23 @@ export function games() {
         // 创建压缩文件
         const backupPath = games[name].path;
         const time = dayjs().valueOf();
-        const zipPath = path.join(saveDataFolder, name, time + '.zip');
+        const zipPath = path.join(saveDataFolder, name, time + '--.zip');
         return new Promise<string>((resolve, _) => {
             compressing.zip.compressDir(backupPath, zipPath).then(() => {
-                resolve(time + '.zip');
+                resolve(time + '--.zip');
             });
         });
+    });
+
+    type RemarkType = { name: string; zipName: string; remark: string };
+    ipcMain.handle('backup-remark', async (_, { name, zipName, remark }: RemarkType) => {
+        const games = store.get('games') as GamesType;
+        if (!games[name]) throw new Error('没有相应游戏');
+        const backupFolderPath = path.join(saveDataFolder, name);
+        fs.renameSync(
+            path.join(backupFolderPath, zipName),
+            path.join(backupFolderPath, zipName.replace(/--.*/, `--${remark}.zip`)),
+        );
+        return zipName.replace(/--.*/, `--${remark}.zip`);
     });
 }

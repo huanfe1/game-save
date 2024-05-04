@@ -41,6 +41,7 @@ type BackupsType = {
     setBackups: (backups: string[]) => void;
     addBackup: (name: string) => void;
     removeBackup: (name: string) => void;
+    renameBackup: (name: string, newName: string) => void;
 };
 
 export const useStoreBackups = create<BackupsType>(set => ({
@@ -54,6 +55,11 @@ export const useStoreBackups = create<BackupsType>(set => ({
     removeBackup: (name: string) => {
         set(state => ({
             backups: state.backups.filter(i => i !== name),
+        }));
+    },
+    renameBackup: (name: string, newName: string) => {
+        set(state => ({
+            backups: state.backups.map(i => (i === name ? newName : i)),
         }));
     },
 }));
