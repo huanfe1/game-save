@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'HarmonyOS Sans SC';
+}
+
+.drag {
+    -webkit-app-region: drag;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply rounded-2xl bg-content2 hover:bg-content3;
+}
