@@ -19,3 +19,13 @@ export const SaveSvg = (props: React.SVGProps<SVGSVGElement>) => (
         ></path>
     </svg>
 );
+
+export const AddSvg = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 256 256">
+        <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={16}>
+            <circle cx={128} cy={128} r={112}></circle>
+            <path d="M 79.999992,128 H 176.0001"></path>
+            <path d="m 128.00004,79.99995 v 96.0001"></path>
+        </g>
+    </svg>
+);

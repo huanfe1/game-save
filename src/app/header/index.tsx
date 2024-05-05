@@ -1,7 +1,7 @@
 export default function Header() {
     return (
-        <header id="header" className="flex h-8 select-none bg-black text-white">
-            <div className="drag flex h-full flex-1 items-center pl-4 text-sm">存档管理器</div>
+        <header className="flex h-8 select-none bg-black text-white">
+            <div className="drag-region flex h-full flex-1 items-center pl-4 text-sm">存档管理器</div>
             <div className="flex">
                 <div
                     className="flex h-full w-8 items-center justify-center hover:bg-slate-800"

@@ -1,11 +1,11 @@
 import { useStoreGames } from '@/store';
-import { DeleteSvg } from '@/svg';
 
 import DoubleButton from '@/components/common/double-button';
 import AddBackup from '@/components/main/add_backup';
 import Delete from '@/components/main/delete';
 import List from '@/components/main/list';
 import OpenFolder from '@/components/main/open_folder';
+import { DeleteSvg } from '@/lib/svg';
 
 export default function Main() {
     const { games, mainName, setMainName, removeGame } = useStoreGames(store => store);

@@ -1,11 +1,11 @@
 import { useStoreBackups, useStoreGames } from '@/store';
-import { DeleteSvg, SaveSvg } from '@/svg';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
 import DoubleButton from '@/components/common/double-button';
+import { DeleteSvg, SaveSvg } from '@/lib/svg';
 
 import ListRemark from './list-remark';
 

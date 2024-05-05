@@ -8,20 +8,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export function games() {
-    type GamesType = Record<string, { path: string }>;
-
+    type GamesType = Record<string, { name: string; path: string }>;
     const store = new Store({ schema: { games: { type: 'object', default: {} } } });
     ipcMain.handle('get-games', async () => {
         return store.get('games');
     });
 
+    ipcMain.handle('getGameUidList', () => {
+        return Object.keys(store.get('games') as GamesType);
+    });
+
+    ipcMain.handle('getGameInfoByUid', () => {
+        return Object.keys(store.get('games') as GamesType);
+    });
+
     ipcMain.handle('add-game', async (_, { name, path }: { name: string; path: string }) => {
-        let games: GamesType = store.get('games') as GamesType;
-        games = {
-            ...games,
-            [name]: { path },
-        };
+        const games: GamesType = store.get('games') as GamesType;
+        const uid = crypto.randomUUID().split('-')[0];
+        games[uid] = { name, path };
         store.set('games', games);
+        return uid;
     });
 
     ipcMain.handle('remove-game', async (_, name: string) => {
