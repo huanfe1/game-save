@@ -10,9 +10,21 @@
     "scripts": {
         "dev": "chcp 65001 && vite",
         "build": "tsc && vite build && electron-builder",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "format": "prettier --write .",
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make"
     },
     "devDependencies": {
+        "@electron-forge/cli": "^7.4.0",
+        "@electron-forge/maker-deb": "^7.4.0",
+        "@electron-forge/maker-rpm": "^7.4.0",
+        "@electron-forge/maker-squirrel": "^7.4.0",
+        "@electron-forge/maker-zip": "^7.4.0",
+        "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+        "@electron-forge/plugin-fuses": "^7.4.0",
+        "@electron/fuses": "^1.8.0",
         "@trivago/prettier-plugin-sort-imports": "^4.3.0",
         "@types/react": "^18.2.64",
         "@types/react-dom": "^18.2.21",
@@ -20,7 +32,6 @@
         "autoprefixer": "^10.4.18",
         "dayjs": "^1.11.11",
         "electron": "^29.1.1",
-        "electron-builder": "^24.13.3",
         "glob": "^10.3.12",
         "postcss": "^8.4.35",
         "postcss-import": "^16.0.1",
@@ -38,7 +49,9 @@
     "dependencies": {
         "@nextui-org/react": "^2.3.6",
         "compressing": "^1.10.0",
+        "electron-squirrel-startup": "^1.0.0",
         "electron-store": "^8.2.0",
-        "framer-motion": "^11.1.7"
+        "framer-motion": "^11.1.7",
+        "sonner": "^1.4.41"
     }
 }

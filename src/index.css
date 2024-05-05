@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    font-family: 'HarmonyOS Sans SC';
+    font-family: 'sans-serif';
 }
 
 .drag {

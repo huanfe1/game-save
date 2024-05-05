@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { app, dialog, ipcMain } from 'electron';
 import Store from 'electron-store';
 import { glob } from 'glob';
-import { exec } from 'node:child_process';
+import { exec, execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -70,6 +70,14 @@ export function games() {
         });
     });
 
+    ipcMain.handle('remove-game-backup', async (_, { name, zipName }: { name: string; zipName: string }) => {
+        const games = store.get('games') as GamesType;
+        if (!games[name]) throw new Error('没有相应游戏');
+        const backupFolderPath = path.join(saveDataFolder, name);
+        fs.unlinkSync(path.join(backupFolderPath, zipName));
+        return zipName;
+    });
+
     type RemarkType = { name: string; zipName: string; remark: string };
     ipcMain.handle('backup-remark', async (_, { name, zipName, remark }: RemarkType) => {
         const games = store.get('games') as GamesType;
@@ -80,5 +88,13 @@ export function games() {
             path.join(backupFolderPath, zipName.replace(/--.*/, `--${remark}.zip`)),
         );
         return zipName.replace(/--.*/, `--${remark}.zip`);
+    });
+
+    ipcMain.handle('cover-game-backup', async (_, { name, zipName }: { name: string; zipName: string }) => {
+        const games = store.get('games') as GamesType;
+        if (!games[name]) throw new Error('没有相应游戏');
+        const backupFilePath = path.join(saveDataFolder, name, zipName);
+        if (fs.existsSync(games[name].path)) execSync('rm -rf ' + games[name].path);
+        return compressing.zip.uncompress(backupFilePath, path.dirname(games[name].path));
     });
 }
