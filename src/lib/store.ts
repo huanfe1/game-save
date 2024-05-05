@@ -1,15 +1,13 @@
 import { create } from 'zustand';
 
 type GameUidListType = {
-    games: string[];
-    setGames: (games: string[]) => void;
-    addGame: (name: string) => void;
-    removeGame: (name: string) => void;
+    games: Record<string, { name: string; path: string }>;
+    refresh: () => void;
 };
 
-export const useStoreGameUidList = create<GameUidListType>(set => ({
-    games: [],
-    setGames: (games: string[]) => set({ games }),
-    addGame: (name: string) => set(state => ({ games: [...state.games, name] })),
-    removeGame: (name: string) => set(state => ({ games: state.games.filter(game => game !== name) })),
+export const useStoreGames = create<GameUidListType>(set => ({
+    games: {},
+    refresh: () => {
+        window.ipcRenderer.invoke('getGames').then(games => set({ games }));
+    },
 }));

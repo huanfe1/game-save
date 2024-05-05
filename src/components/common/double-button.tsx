@@ -15,7 +15,7 @@ export default function DoubleButton(props: ButtonProps & { handle?: () => void 
             </Button>
             <Modal isOpen={isOpen} backdrop="blur" onOpenChange={onOpenChange} isDismissable hideCloseButton>
                 <ModalContent>
-                    <ModalHeader>请注意</ModalHeader>
+                    <ModalHeader>{props.title || '请注意'}</ModalHeader>
                     <ModalBody>{props.content}</ModalBody>
                     <ModalFooter>
                         <Button color="primary" variant="light" onPress={onClose}>

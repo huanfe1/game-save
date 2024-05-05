@@ -1,4 +1,5 @@
 import { BrowserWindow, app, ipcMain, shell } from 'electron';
+import { exec } from 'node:child_process';
 import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
@@ -136,6 +137,10 @@ ipcMain.on('window-min', function () {
 
 ipcMain.on('window-reload', function () {
     win && win.reload();
+});
+
+ipcMain.on('open-save-data', async () => {
+    exec(`start "" "${path.join(app.getPath('userData'), 'save_data')}"`);
 });
 
 games();

@@ -1,7 +1,7 @@
 import { useStoreGames } from '@/store';
 
+import AddBackup from '@/app/game/button_group/add_backup';
 import DoubleButton from '@/components/common/double-button';
-import AddBackup from '@/components/main/add_backup';
 import Delete from '@/components/main/delete';
 import List from '@/components/main/list';
 import OpenFolder from '@/components/main/open_folder';

@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextu
 import { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 
-import { useStoreGameUidList } from '@/lib/store';
+import { useStoreGames } from '@/lib/store';
 import { AddSvg } from '@/lib/svg';
 
 export default function AddGame() {
@@ -11,24 +11,24 @@ export default function AddGame() {
     const [name, setName] = useState('');
     const [path, setPath] = useState('');
     const select = () => {
-        window.ipcRenderer.invoke('choose-folder').then(res => setPath(res));
+        window.ipcRenderer.invoke('chooseFolder').then(res => setPath(res));
     };
     const close = () => {
         setName('');
         setPath('');
         setState(false);
     };
-    const { addGame } = useStoreGameUidList(store => store);
+    const { refresh } = useStoreGames(store => store);
     const click = () => {
         if (!name || !path) {
-            toast.error(`未填写项目名或路径`);
+            toast.error(`未填写游戏名称或路径`);
             return;
         }
-        window.ipcRenderer.invoke('add-game', { name, path }).then(res => {
-            addGame(res);
+        window.ipcRenderer.invoke('addGame', { name, path }).then(res => {
+            refresh();
+            toast.dismiss();
+            close();
         });
-        toast.dismiss();
-        close();
     };
     return (
         <>
