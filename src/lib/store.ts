@@ -11,3 +11,15 @@ export const useStoreGames = create<GameUidListType>(set => ({
         window.ipcRenderer.invoke('getGames').then(games => set({ games }));
     },
 }));
+
+type BackupsType = {
+    backups: string[];
+    refresh: (uid: string) => void;
+};
+
+export const useStoreBackups = create<BackupsType>(set => ({
+    backups: [],
+    refresh: (uid: string) => {
+        window.ipcRenderer.invoke('getAllBackupsByUid', uid).then(backups => set({ backups }));
+    },
+}));

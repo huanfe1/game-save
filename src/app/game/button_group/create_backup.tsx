@@ -1,17 +1,17 @@
-import { useStoreBackups, useStoreGames } from '@/store';
 import { Button } from '@nextui-org/react';
 import { Toaster, toast } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
+import { useStoreBackups } from '@/lib/store';
 import { AddSvg } from '@/lib/svg';
 
 export default function CreateBackup() {
-    const { addBackup } = useStoreBackups(store => store);
+    const { refresh } = useStoreBackups(store => store);
     const { uid } = useParams();
     const click = () => {
-        window.ipcRenderer.invoke('createGameBackupByUid', uid).then(name => {
-            // addBackup(name);
+        window.ipcRenderer.invoke('createGameBackupByUid', uid).then(() => {
             toast.success('创建备份成功');
+            refresh(uid!);
         });
     };
     return (

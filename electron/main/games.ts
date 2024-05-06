@@ -44,11 +44,9 @@ export function games() {
 
     const saveDataFolder = path.join(app.getPath('userData'), 'save_data');
     if (!fs.existsSync(saveDataFolder)) fs.mkdirSync(saveDataFolder);
-    const games = store.get('games') as GamesType;
 
     ipcMain.handle('getAllBackupsByUid', (_, uid: string) => {
-        const games = store.get('games') as GamesType;
-        return glob('*.zip', { cwd: path.join(saveDataFolder, games[uid!].path) });
+        return glob('*.zip', { cwd: path.join(saveDataFolder, uid) });
     });
 
     ipcMain.handle('createGameBackupByUid', async (_, uid: string) => {

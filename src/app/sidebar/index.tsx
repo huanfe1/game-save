@@ -12,7 +12,7 @@ export default function Sidebar() {
     useEffect(() => refresh, []);
     return (
         <div className="flex h-[768px] w-64 flex-col border-r border-default-100">
-            <div className="font-blod p-3 text-xl text-default-800" onClick={() => navigate('/')}>
+            <div className="font-blod p-3 text-xl" onClick={() => navigate('/')}>
                 游戏
             </div>
             <div className="flex flex-col overflow-y-scroll">
