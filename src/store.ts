@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { create } from 'zustand';
 
 type GamesType = {

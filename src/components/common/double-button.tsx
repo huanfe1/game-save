@@ -30,3 +30,7 @@ export default function DoubleButton(props: ButtonProps & { handle?: () => void 
         </>
     );
 }
+
+export function DoubleFunction() {
+    return;
+}

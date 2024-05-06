@@ -1,6 +1,6 @@
 {
     "name": "gameback",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "dist-electron/main/index.js",
     "description": "游戏存档管理器",
     "author": "huanfe1",

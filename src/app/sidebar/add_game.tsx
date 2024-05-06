@@ -1,7 +1,7 @@
 import { Button, Input } from '@nextui-org/react';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { useState } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { useStoreGames } from '@/lib/store';
 import { AddSvg } from '@/lib/svg';
@@ -38,12 +38,6 @@ export default function AddGame() {
             >
                 <AddSvg width="18px" height="18px" />
                 <span>添加游戏</span>
-                <Toaster
-                    position="top-center"
-                    toastOptions={{
-                        className: 'bg-background text-foreground',
-                    }}
-                />
             </div>
             <Modal isOpen={state} backdrop="blur" onClose={close}>
                 <ModalContent>

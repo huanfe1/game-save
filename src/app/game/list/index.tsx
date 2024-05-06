@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 
 import { useStoreBackups } from '@/lib/store';
 
+import Menu from './menu';
+
 export default function List() {
     const { uid } = useParams();
     const { backups, refresh } = useStoreBackups(store => store);
@@ -21,7 +23,9 @@ export default function List() {
                     <TableRow key={name}>
                         <TableCell>{dayjs(parseInt(name.split('--')[0])).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
                         <TableCell>{name.replace('.zip', '').split('--')[1]}</TableCell>
-                        <TableCell className="space-x-3">测试</TableCell>
+                        <TableCell className="space-x-3">
+                            <Menu zipName={name} />
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>

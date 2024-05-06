@@ -27,6 +27,8 @@ export function games() {
 
     ipcMain.handle('removeGame', async (_, uid: string) => {
         const games: GamesType = store.get('games') as GamesType;
+        const folderPath = path.join(saveDataFolder, uid);
+        if (fs.existsSync(folderPath)) execSync('rm -rf ' + folderPath);
         delete games[uid];
         store.set('games', games);
     });
@@ -66,19 +68,18 @@ export function games() {
         });
     });
 
-    ipcMain.handle('remove-game-backup', async (_, { name, zipName }: { name: string; zipName: string }) => {
+    ipcMain.handle('deleteGameBackup', async (_, { uid, zipName }: { uid: string; zipName: string }) => {
         const games = store.get('games') as GamesType;
-        if (!games[name]) throw new Error('没有相应游戏');
-        const backupFolderPath = path.join(saveDataFolder, name);
-        fs.unlinkSync(path.join(backupFolderPath, zipName));
+        if (!games[uid]) throw new Error('没有相应游戏');
+        fs.unlinkSync(path.join(saveDataFolder, uid, zipName));
         return zipName;
     });
 
-    type RemarkType = { name: string; zipName: string; remark: string };
-    ipcMain.handle('backup-remark', async (_, { name, zipName, remark }: RemarkType) => {
+    type RemarkType = { uid: string; zipName: string; remark: string };
+    ipcMain.handle('backupRemark', async (_, { uid, zipName, remark }: RemarkType) => {
         const games = store.get('games') as GamesType;
-        if (!games[name]) throw new Error('没有相应游戏');
-        const backupFolderPath = path.join(saveDataFolder, name);
+        if (!games[uid]) throw new Error('没有相应游戏');
+        const backupFolderPath = path.join(saveDataFolder, uid);
         fs.renameSync(
             path.join(backupFolderPath, zipName),
             path.join(backupFolderPath, zipName.replace(/--.*/, `--${remark}.zip`)),
@@ -86,11 +87,10 @@ export function games() {
         return zipName.replace(/--.*/, `--${remark}.zip`);
     });
 
-    ipcMain.handle('cover-game-backup', async (_, { name, zipName }: { name: string; zipName: string }) => {
+    ipcMain.handle('coverGameBackup', async (_, { uid, zipName }: { uid: string; zipName: string }) => {
         const games = store.get('games') as GamesType;
-        if (!games[name]) throw new Error('没有相应游戏');
-        const backupFilePath = path.join(saveDataFolder, name, zipName);
-        if (fs.existsSync(games[name].path)) execSync('rm -rf ' + games[name].path);
-        return compressing.zip.uncompress(backupFilePath, path.dirname(games[name].path));
+        if (!games[uid]) throw new Error('没有相应游戏');
+        if (fs.existsSync(games[uid].path)) execSync('rm -rf ' + games[uid].path);
+        return compressing.zip.uncompress(path.join(saveDataFolder, uid, zipName), path.dirname(games[uid].path));
     });
 }

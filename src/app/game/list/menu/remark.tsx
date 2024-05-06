@@ -1,23 +1,15 @@
-import { useStoreBackups, useStoreGames } from '@/store';
 import { Button, Input } from '@nextui-org/react';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-export default function ListRemark({ oldName }: { oldName: string }) {
+import { useStoreBackups } from '@/lib/store';
+
+export default function Remark({ uid, zipName }: { uid: string; zipName: string }) {
     const [state, setState] = useState(false);
-    const [remark, setRemark] = useState<string>('');
-    const mainName = useStoreGames(store => store.mainName);
-    const { renameBackup } = useStoreBackups(store => store);
+    const [remark, setRemark] = useState<string>(zipName.replace('.zip', '').split('--')[1]);
+    const { refresh } = useStoreBackups(store => store);
     const click = () => {
-        window.ipcRenderer
-            .invoke('backup-remark', {
-                name: mainName,
-                zipName: oldName,
-                remark: remark,
-            })
-            .then(newName => {
-                renameBackup(oldName, newName);
-            });
+        window.ipcRenderer.invoke('backupRemark', { uid, zipName, remark }).then(() => refresh(uid));
     };
     return (
         <>
@@ -34,7 +26,7 @@ export default function ListRemark({ oldName }: { oldName: string }) {
                             </ModalBody>
                             <ModalFooter>
                                 <Button
-                                    variant="faded"
+                                    color="primary"
                                     onPress={() => {
                                         close();
                                         click();

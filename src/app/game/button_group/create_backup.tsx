@@ -19,12 +19,6 @@ export default function CreateBackup() {
             <Button isIconOnly title="创建备份" onPress={click}>
                 <AddSvg width="20px" height="20px" />
             </Button>
-            <Toaster
-                position="top-center"
-                toastOptions={{
-                    className: 'bg-background text-foreground',
-                }}
-            />
         </>
     );
 }
